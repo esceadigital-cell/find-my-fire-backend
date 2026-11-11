@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "climate_zones",
+  "info": {
+    "singularName": "climate-zone",
+    "pluralName": "climate-zones",
+    "displayName": "ClimateZone"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "baseM2PerKw": {
+      "type": "decimal",
+      "required": true
+    },
+    "minJulyTempC": {
+      "type": "decimal"
+    },
+    "colour": {
+      "type": "string"
+    },
+    "order": {
+      "type": "integer"
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

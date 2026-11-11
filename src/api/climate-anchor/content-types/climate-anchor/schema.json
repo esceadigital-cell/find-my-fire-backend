@@ -1,0 +1,38 @@
+{
+  "kind": "collectionType",
+  "collectionName": "climate_anchors",
+  "info": {
+    "singularName": "climate-anchor",
+    "pluralName": "climate-anchors",
+    "displayName": "ClimateAnchor"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "country": {
+      "type": "enumeration",
+      "enum": [
+        "NZ",
+        "AU"
+      ]
+    },
+    "lat": {
+      "type": "decimal",
+      "required": true
+    },
+    "lng": {
+      "type": "decimal",
+      "required": true
+    },
+    "julyMinC": {
+      "type": "decimal",
+      "required": true
+    }
+  }
+}

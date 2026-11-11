@@ -1,0 +1,105 @@
+{
+  "kind": "collectionType",
+  "collectionName": "products",
+  "info": {
+    "singularName": "product",
+    "pluralName": "products",
+    "displayName": "Product"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "productUrl": {
+      "type": "string"
+    },
+    "fuelType": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "wood",
+        "gas",
+        "electric"
+      ]
+    },
+    "installType": {
+      "type": "enumeration",
+      "enum": [
+        "freestanding",
+        "inbuilt",
+        "insert"
+      ]
+    },
+    "active": {
+      "type": "boolean",
+      "default": true
+    },
+    "maxOutputKw": {
+      "type": "decimal"
+    },
+    "emissionsGkg": {
+      "type": "decimal",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "fuelType"
+            },
+            "wood"
+          ]
+        }
+      }
+    },
+    "efficiencyPct": {
+      "type": "decimal",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "fuelType"
+            },
+            "wood"
+          ]
+        }
+      }
+    },
+    "uleb": {
+      "type": "boolean",
+      "default": false
+    },
+    "wetback": {
+      "type": "boolean",
+      "default": false
+    },
+    "width": {
+      "type": "integer"
+    },
+    "height": {
+      "type": "integer"
+    },
+    "depth": {
+      "type": "integer"
+    },
+    "markets": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::market.market",
+      "required": true
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    }
+  }
+}

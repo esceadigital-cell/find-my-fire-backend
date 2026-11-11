@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "air_sheds",
+  "info": {
+    "singularName": "air-shed",
+    "pluralName": "air-sheds",
+    "displayName": "AirShed"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "rule_profile": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::rule-profile.rule-profile"
+    },
+    "geometry": {
+      "type": "json"
+    },
+    "sourceUrl": {
+      "type": "string"
+    },
+    "verifiedAt": {
+      "type": "date"
+    },
+    "region": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::region.region",
+      "inversedBy": "air_sheds"
+    }
+  }
+}

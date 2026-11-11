@@ -1,0 +1,88 @@
+{
+  "version": 1,
+  "sections": {
+    "collectionTypes": {
+      "groups": [
+        {
+          "parent": null,
+          "name": "Products",
+          "id": "grp_3b84df128cc54e3b8fc8d5a6",
+          "children": [
+            {
+              "uid": "api::product.product",
+              "type": "contentType"
+            }
+          ]
+        },
+        {
+          "parent": null,
+          "name": "Climate",
+          "id": "grp_b465d1c3f4a34e6da01b8129",
+          "children": [
+            {
+              "uid": "api::climate-zone.climate-zone",
+              "type": "contentType"
+            },
+            {
+              "uid": "api::climate-anchor.climate-anchor",
+              "type": "contentType"
+            }
+          ]
+        },
+        {
+          "parent": null,
+          "name": "Location & Regulations",
+          "id": "grp_b352c38b53e545acbcc27423",
+          "children": [
+            {
+              "uid": "api::rule-profile.rule-profile",
+              "type": "contentType"
+            },
+            {
+              "uid": "api::region.region",
+              "type": "contentType"
+            },
+            {
+              "uid": "api::air-shed.air-shed",
+              "type": "contentType"
+            },
+            {
+              "uid": "api::postcode.postcode",
+              "type": "contentType"
+            },
+            {
+              "uid": "api::market.market",
+              "type": "contentType"
+            }
+          ]
+        },
+        {
+          "parent": null,
+          "name": "User questions",
+          "id": "grp_de9fdb24c6834b799d186ab3",
+          "children": [
+            {
+              "uid": "api::question.question",
+              "type": "contentType"
+            },
+            {
+              "uid": "api::heating-question.heating-question",
+              "type": "contentType"
+            },
+            {
+              "uid": "api::lifestyle-question.lifestyle-question",
+              "type": "contentType"
+            },
+            {
+              "uid": "api::question-category.question-category",
+              "type": "contentType"
+            }
+          ]
+        }
+      ]
+    },
+    "singleTypes": {
+      "groups": []
+    }
+  }
+}

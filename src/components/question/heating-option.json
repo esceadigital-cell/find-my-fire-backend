@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_question_heating_options",
+  "info": {
+    "displayName": "heating-option"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "modifier": {
+      "type": "decimal",
+      "required": true
+    },
+    "key": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

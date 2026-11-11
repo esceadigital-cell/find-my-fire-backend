@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "regions",
+  "info": {
+    "singularName": "region",
+    "pluralName": "regions",
+    "displayName": "Region"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "council": {
+      "type": "string"
+    },
+    "rule_profile": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::rule-profile.rule-profile"
+    },
+    "legalText": {
+      "type": "text"
+    },
+    "sourceUrl": {
+      "type": "string"
+    },
+    "air_sheds": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::air-shed.air-shed",
+      "mappedBy": "region"
+    }
+  }
+}

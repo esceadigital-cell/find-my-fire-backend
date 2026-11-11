@@ -1,0 +1,30 @@
+{
+  "collectionName": "components_question_lifestyle_questions",
+  "info": {
+    "displayName": "Property option"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "filterValue": {
+      "type": "string"
+    },
+    "filterOperator": {
+      "type": "enumeration",
+      "default": "equals",
+      "enum": [
+        "equals",
+        "not equals",
+        "less or equal",
+        "greater or equal"
+      ]
+    },
+    "key": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}
