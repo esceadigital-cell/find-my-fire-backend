@@ -69,8 +69,7 @@
       }
     },
     "uleb": {
-      "type": "boolean",
-      "default": false
+      "type": "boolean"
     },
     "wetback": {
       "type": "boolean",
@@ -99,6 +98,74 @@
         "files",
         "videos",
         "audios"
+      ]
+    },
+    "brands": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::brand.brand"
+    },
+    "isOutdoor": {
+      "type": "boolean",
+      "required": false,
+      "default": false
+    },
+    "configurations": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::configuration.configuration"
+    },
+    "bases": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::base.base",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "installType"
+            },
+            "freestanding"
+          ]
+        }
+      }
+    },
+    "emissionFactorMgMj": {
+      "type": "decimal"
+    },
+    "star_rating": {
+      "type": "decimal",
+      "min": 0,
+      "max": 5
+    },
+    "clean_air_approved": {
+      "type": "boolean"
+    },
+    "zero_clearance_rated": {
+      "type": "boolean",
+      "default": false
+    },
+    "flue_type": {
+      "type": "enumeration",
+      "enum": [
+        "direct vent",
+        "powered direct vent",
+        "ventless"
+      ]
+    },
+    "remote_control": {
+      "type": "boolean",
+      "required": false
+    },
+    "smartheat_wifi": {
+      "type": "boolean"
+    },
+    "external_fan": {
+      "type": "enumeration",
+      "enum": [
+        "Yes",
+        "No",
+        "Optional"
       ]
     }
   }

@@ -1,0 +1,20 @@
+{
+  "kind": "collectionType",
+  "collectionName": "configurations",
+  "info": {
+    "singularName": "configuration",
+    "pluralName": "configurations",
+    "displayName": "configuration"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "configurationType": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    }
+  }
+}

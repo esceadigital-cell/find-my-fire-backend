@@ -479,6 +479,59 @@ export interface ApiAirShedAirShed extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiBaseBase extends Struct.CollectionTypeSchema {
+  collectionName: 'bases';
+  info: {
+    displayName: 'base';
+    pluralName: 'bases';
+    singularName: 'base';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    baseType: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::base.base'> &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiBrandBrand extends Struct.CollectionTypeSchema {
+  collectionName: 'brands';
+  info: {
+    displayName: 'Brand';
+    pluralName: 'brands';
+    singularName: 'brand';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    brandName: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::brand.brand'> &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    url: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface ApiClimateAnchorClimateAnchor
   extends Struct.CollectionTypeSchema {
   collectionName: 'climate_anchors';
@@ -537,6 +590,37 @@ export interface ApiClimateZoneClimateZone extends Struct.CollectionTypeSchema {
     minJulyTempC: Schema.Attribute.Decimal;
     name: Schema.Attribute.String & Schema.Attribute.Required;
     order: Schema.Attribute.Integer;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiConfigurationConfiguration
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'configurations';
+  info: {
+    displayName: 'configuration';
+    pluralName: 'configurations';
+    singularName: 'configuration';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    configurationType: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::configuration.configuration'
+    > &
+      Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -727,12 +811,24 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
   };
   attributes: {
     active: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    bases: Schema.Attribute.Relation<'oneToMany', 'api::base.base'>;
+    brands: Schema.Attribute.Relation<'oneToMany', 'api::brand.brand'>;
+    clean_air_approved: Schema.Attribute.Boolean;
+    configurations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::configuration.configuration'
+    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     depth: Schema.Attribute.Integer;
     efficiencyPct: Schema.Attribute.Decimal;
+    emissionFactorMgMj: Schema.Attribute.Decimal;
     emissionsGkg: Schema.Attribute.Decimal;
+    external_fan: Schema.Attribute.Enumeration<['Yes', 'No', 'Optional']>;
+    flue_type: Schema.Attribute.Enumeration<
+      ['direct vent', 'powered direct vent', 'ventless']
+    >;
     fuelType: Schema.Attribute.Enumeration<['wood', 'gas', 'electric']> &
       Schema.Attribute.Required;
     height: Schema.Attribute.Integer;
@@ -740,6 +836,7 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     installType: Schema.Attribute.Enumeration<
       ['freestanding', 'inbuilt', 'insert']
     >;
+    isOutdoor: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -752,12 +849,24 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     name: Schema.Attribute.String & Schema.Attribute.Required;
     productUrl: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
-    uleb: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    remote_control: Schema.Attribute.Boolean;
+    smartheat_wifi: Schema.Attribute.Boolean;
+    star_rating: Schema.Attribute.Decimal &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 5;
+          min: 0;
+        },
+        number
+      >;
+    uleb: Schema.Attribute.Boolean;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     wetback: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     width: Schema.Attribute.Integer;
+    zero_clearance_rated: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
   };
 }
 
@@ -1435,8 +1544,11 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::air-shed.air-shed': ApiAirShedAirShed;
+      'api::base.base': ApiBaseBase;
+      'api::brand.brand': ApiBrandBrand;
       'api::climate-anchor.climate-anchor': ApiClimateAnchorClimateAnchor;
       'api::climate-zone.climate-zone': ApiClimateZoneClimateZone;
+      'api::configuration.configuration': ApiConfigurationConfiguration;
       'api::heating-question.heating-question': ApiHeatingQuestionHeatingQuestion;
       'api::lifestyle-question.lifestyle-question': ApiLifestyleQuestionLifestyleQuestion;
       'api::market.market': ApiMarketMarket;

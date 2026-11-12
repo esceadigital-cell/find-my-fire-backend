@@ -11,6 +11,18 @@
             {
               "uid": "api::product.product",
               "type": "contentType"
+            },
+            {
+              "uid": "api::brand.brand",
+              "type": "contentType"
+            },
+            {
+              "uid": "api::configuration.configuration",
+              "type": "contentType"
+            },
+            {
+              "uid": "api::base.base",
+              "type": "contentType"
             }
           ]
         },
