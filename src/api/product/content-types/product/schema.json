@@ -15,9 +15,6 @@
       "type": "string",
       "required": true
     },
-    "productUrl": {
-      "type": "string"
-    },
     "fuelType": {
       "type": "enumeration",
       "required": true,
@@ -69,20 +66,40 @@
       }
     },
     "uleb": {
-      "type": "boolean"
+      "type": "boolean",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "fuelType"
+            },
+            "wood"
+          ]
+        }
+      }
     },
     "wetback": {
       "type": "boolean",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "fuelType"
+            },
+            "wood"
+          ]
+        }
+      },
       "default": false
     },
     "width": {
-      "type": "integer"
+      "type": "decimal"
     },
     "height": {
-      "type": "integer"
+      "type": "decimal"
     },
     "depth": {
-      "type": "integer"
+      "type": "decimal"
     },
     "markets": {
       "type": "relation",
@@ -110,11 +127,6 @@
       "required": false,
       "default": false
     },
-    "configurations": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::configuration.configuration"
-    },
     "bases": {
       "type": "relation",
       "relation": "oneToMany",
@@ -131,15 +143,45 @@
       }
     },
     "emissionFactorMgMj": {
-      "type": "decimal"
+      "type": "decimal",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "fuelType"
+            },
+            "wood"
+          ]
+        }
+      }
     },
     "star_rating": {
       "type": "decimal",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "fuelType"
+            },
+            "gas"
+          ]
+        }
+      },
       "min": 0,
       "max": 5
     },
     "clean_air_approved": {
-      "type": "boolean"
+      "type": "boolean",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "fuelType"
+            },
+            "wood"
+          ]
+        }
+      }
     },
     "zero_clearance_rated": {
       "type": "boolean",
@@ -147,6 +189,16 @@
     },
     "flue_type": {
       "type": "enumeration",
+      "conditions": {
+        "visible": {
+          "!=": [
+            {
+              "var": "fuelType"
+            },
+            "electric"
+          ]
+        }
+      },
       "enum": [
         "direct vent",
         "powered direct vent",
@@ -155,18 +207,59 @@
     },
     "remote_control": {
       "type": "boolean",
+      "conditions": {
+        "visible": {
+          "!=": [
+            {
+              "var": "fuelType"
+            },
+            "wood"
+          ]
+        }
+      },
       "required": false
     },
     "smartheat_wifi": {
-      "type": "boolean"
+      "type": "boolean",
+      "conditions": {
+        "visible": {
+          "!=": [
+            {
+              "var": "fuelType"
+            },
+            "wood"
+          ]
+        }
+      }
     },
     "external_fan": {
       "type": "enumeration",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "fuelType"
+            },
+            "wood"
+          ]
+        }
+      },
       "enum": [
         "Yes",
         "No",
         "Optional"
       ]
+    },
+    "productLinks": {
+      "type": "component",
+      "component": "product.product-link",
+      "repeatable": true
+    },
+    "manufacturer": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::brand.brand",
+      "required": true
     }
   }
 }

@@ -42,7 +42,24 @@
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::question-category.question-category",
+      "conditions": {
+        "visible": {
+          "!=": [
+            {
+              "var": "isDependingOnHeatDemand"
+            },
+            true
+          ]
+        }
+      },
       "inversedBy": "heatingQuestions"
+    },
+    "isDependingOnHeatDemand": {
+      "type": "boolean",
+      "default": true
+    },
+    "extraDescription": {
+      "type": "text"
     }
   }
 }

@@ -107,6 +107,27 @@
       "relation": "manyToOne",
       "target": "api::question-category.question-category",
       "inversedBy": "propertyQuestions"
+    },
+    "allowMultipleAnswers": {
+      "type": "boolean",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "inputOption"
+            },
+            "options"
+          ]
+        }
+      },
+      "default": false
+    },
+    "extraDescription": {
+      "type": "text"
+    },
+    "isHardFiltering": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

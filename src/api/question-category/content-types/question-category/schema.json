@@ -30,7 +30,7 @@
       "target": "api::lifestyle-question.lifestyle-question",
       "mappedBy": "category"
     },
-    "isPreferenceCategory": {
+    "isOptionalCategory": {
       "type": "boolean",
       "default": false
     }

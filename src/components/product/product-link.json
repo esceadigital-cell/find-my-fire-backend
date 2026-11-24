@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_product_product_links",
+  "info": {
+    "displayName": "productLink"
+  },
+  "options": {},
+  "attributes": {
+    "url": {
+      "type": "string",
+      "required": true
+    },
+    "brand": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::brand.brand",
+      "required": true
+    },
+    "configuration": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::configuration.configuration"
+    },
+    "label": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

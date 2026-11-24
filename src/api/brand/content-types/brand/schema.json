@@ -20,6 +20,10 @@
       "type": "string",
       "required": true,
       "regex": "^https://([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,}(:\\d{1,5})?([/?#]\\S*)?$"
+    },
+    "slug": {
+      "type": "uid",
+      "required": true
     }
   }
 }
