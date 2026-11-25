@@ -525,6 +525,7 @@ export interface ApiBrandBrand extends Struct.CollectionTypeSchema {
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::brand.brand'> &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -651,10 +652,13 @@ export interface ApiHeatingQuestionHeatingQuestion
       'manyToOne',
       'api::heating-question.heating-question'
     >;
+    extraDescription: Schema.Attribute.Text;
     followUps: Schema.Attribute.Relation<
       'oneToMany',
       'api::heating-question.heating-question'
     >;
+    isDependingOnHeatDemand: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<true>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -684,6 +688,8 @@ export interface ApiLifestyleQuestionLifestyleQuestion
     draftAndPublish: true;
   };
   attributes: {
+    allowMultipleAnswers: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
     category: Schema.Attribute.Relation<
       'manyToOne',
       'api::question-category.question-category'
@@ -695,18 +701,47 @@ export interface ApiLifestyleQuestionLifestyleQuestion
       'manyToOne',
       'api::lifestyle-question.lifestyle-question'
     >;
+    extraDescription: Schema.Attribute.Text;
     followUps: Schema.Attribute.Relation<
       'oneToMany',
       'api::lifestyle-question.lifestyle-question'
     >;
     inputOption: Schema.Attribute.Enumeration<['options', 'number']> &
       Schema.Attribute.DefaultTo<'options'>;
+    isHardFiltering: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::lifestyle-question.lifestyle-question'
     > &
       Schema.Attribute.Private;
+    onlyForField: Schema.Attribute.Enumeration<
+      [
+        'fuelType',
+        'installType',
+        'wetback',
+        'uleb',
+        'maxOutputKw',
+        'width',
+        'height',
+        'depth',
+        'efficiencyPct',
+        'emissionsGkg',
+        'emissionFactorMgMj',
+        'star_rating',
+        'clean_air_approved',
+        'zero_clearance_rated',
+        'isOutdoor',
+        'remote_control',
+        'smartheat_wifi',
+        'flue_type',
+        'external_fan',
+        'bases',
+        'brands',
+      ]
+    >;
+    onlyForValue: Schema.Attribute.String;
     operator: Schema.Attribute.Enumeration<
       ['equals', 'not equals', 'less or equal', 'greater or equal']
     >;
@@ -722,6 +757,19 @@ export interface ApiLifestyleQuestionLifestyleQuestion
         'width',
         'height',
         'depth',
+        'efficiencyPct',
+        'emissionsGkg',
+        'emissionFactorMgMj',
+        'star_rating',
+        'clean_air_approved',
+        'zero_clearance_rated',
+        'isOutdoor',
+        'remote_control',
+        'smartheat_wifi',
+        'flue_type',
+        'external_fan',
+        'bases',
+        'brands',
       ]
     >;
     publishedAt: Schema.Attribute.DateTime;
@@ -814,14 +862,10 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     bases: Schema.Attribute.Relation<'oneToMany', 'api::base.base'>;
     brands: Schema.Attribute.Relation<'oneToMany', 'api::brand.brand'>;
     clean_air_approved: Schema.Attribute.Boolean;
-    configurations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::configuration.configuration'
-    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    depth: Schema.Attribute.Integer;
+    depth: Schema.Attribute.Decimal;
     efficiencyPct: Schema.Attribute.Decimal;
     emissionFactorMgMj: Schema.Attribute.Decimal;
     emissionsGkg: Schema.Attribute.Decimal;
@@ -831,7 +875,7 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     >;
     fuelType: Schema.Attribute.Enumeration<['wood', 'gas', 'electric']> &
       Schema.Attribute.Required;
-    height: Schema.Attribute.Integer;
+    height: Schema.Attribute.Decimal;
     image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     installType: Schema.Attribute.Enumeration<
       ['freestanding', 'inbuilt', 'insert']
@@ -843,11 +887,13 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
       'api::product.product'
     > &
       Schema.Attribute.Private;
+    manufacturer: Schema.Attribute.Relation<'oneToOne', 'api::brand.brand'> &
+      Schema.Attribute.Required;
     markets: Schema.Attribute.Relation<'oneToMany', 'api::market.market'> &
       Schema.Attribute.Required;
     maxOutputKw: Schema.Attribute.Decimal;
     name: Schema.Attribute.String & Schema.Attribute.Required;
-    productUrl: Schema.Attribute.String;
+    productLinks: Schema.Attribute.Component<'product.product-link', true>;
     publishedAt: Schema.Attribute.DateTime;
     remote_control: Schema.Attribute.Boolean;
     smartheat_wifi: Schema.Attribute.Boolean;
@@ -864,7 +910,7 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     wetback: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
-    width: Schema.Attribute.Integer;
+    width: Schema.Attribute.Decimal;
     zero_clearance_rated: Schema.Attribute.Boolean &
       Schema.Attribute.DefaultTo<false>;
   };
@@ -889,7 +935,7 @@ export interface ApiQuestionCategoryQuestionCategory
       'oneToMany',
       'api::heating-question.heating-question'
     >;
-    isPreferenceCategory: Schema.Attribute.Boolean &
+    isOptionalCategory: Schema.Attribute.Boolean &
       Schema.Attribute.DefaultTo<false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -904,47 +950,6 @@ export interface ApiQuestionCategoryQuestionCategory
       'api::lifestyle-question.lifestyle-question'
     >;
     publishedAt: Schema.Attribute.DateTime;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
-export interface ApiQuestionQuestion extends Struct.CollectionTypeSchema {
-  collectionName: 'questions';
-  info: {
-    displayName: 'Question';
-    pluralName: 'questions';
-    singularName: 'question';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::question.question'
-    > &
-      Schema.Attribute.Private;
-    order: Schema.Attribute.Integer;
-    productField: Schema.Attribute.Enumeration<
-      [
-        'fuelType',
-        'installType',
-        'wetback',
-        'uleb',
-        'maxOutputKw',
-        'width',
-        'height',
-        'depth',
-      ]
-    >;
-    publishedAt: Schema.Attribute.DateTime;
-    text: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1555,7 +1560,6 @@ declare module '@strapi/strapi' {
       'api::postcode.postcode': ApiPostcodePostcode;
       'api::product.product': ApiProductProduct;
       'api::question-category.question-category': ApiQuestionCategoryQuestionCategory;
-      'api::question.question': ApiQuestionQuestion;
       'api::region.region': ApiRegionRegion;
       'api::rule-profile.rule-profile': ApiRuleProfileRuleProfile;
       'plugin::content-releases.release': PluginContentReleasesRelease;

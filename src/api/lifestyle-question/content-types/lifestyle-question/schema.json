@@ -44,7 +44,20 @@
         "maxOutputKw",
         "width",
         "height",
-        "depth"
+        "depth",
+        "efficiencyPct",
+        "emissionsGkg",
+        "emissionFactorMgMj",
+        "star_rating",
+        "clean_air_approved",
+        "zero_clearance_rated",
+        "isOutdoor",
+        "remote_control",
+        "smartheat_wifi",
+        "flue_type",
+        "external_fan",
+        "bases",
+        "brands"
       ]
     },
     "inputOption": {
@@ -128,6 +141,35 @@
     "isHardFiltering": {
       "type": "boolean",
       "default": false
+    },
+    "onlyForField": {
+      "type": "enumeration",
+      "enum": [
+        "fuelType",
+        "installType",
+        "wetback",
+        "uleb",
+        "maxOutputKw",
+        "width",
+        "height",
+        "depth",
+        "efficiencyPct",
+        "emissionsGkg",
+        "emissionFactorMgMj",
+        "star_rating",
+        "clean_air_approved",
+        "zero_clearance_rated",
+        "isOutdoor",
+        "remote_control",
+        "smartheat_wifi",
+        "flue_type",
+        "external_fan",
+        "bases",
+        "brands"
+      ]
+    },
+    "onlyForValue": {
+      "type": "string"
     }
   }
 }

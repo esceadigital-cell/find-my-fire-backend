@@ -74,10 +74,6 @@
           "id": "grp_de9fdb24c6834b799d186ab3",
           "children": [
             {
-              "uid": "api::question.question",
-              "type": "contentType"
-            },
-            {
               "uid": "api::heating-question.heating-question",
               "type": "contentType"
             },
