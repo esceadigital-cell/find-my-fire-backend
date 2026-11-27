@@ -170,6 +170,11 @@
     },
     "onlyForValue": {
       "type": "string"
+    },
+    "markets": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::market.market"
     }
   }
 }

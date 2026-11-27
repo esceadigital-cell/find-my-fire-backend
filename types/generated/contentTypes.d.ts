@@ -716,6 +716,7 @@ export interface ApiLifestyleQuestionLifestyleQuestion
       'api::lifestyle-question.lifestyle-question'
     > &
       Schema.Attribute.Private;
+    markets: Schema.Attribute.Relation<'oneToMany', 'api::market.market'>;
     onlyForField: Schema.Attribute.Enumeration<
       [
         'fuelType',
